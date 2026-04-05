@@ -6,10 +6,30 @@
 
 <style>
 body {
+    margin: 0;
     font-family: Arial;
     background: #f5f5f5;
+}
+
+/* верхня панель як УЗ */
+.top {
+    background: #f0f0f0;
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+.top span {
+    color: #333;
+}
+
+.steps {
+    float: right;
+    color: #666;
+}
+
+.container {
+    padding: 40px;
     text-align: center;
-    padding: 50px;
 }
 
 .card {
@@ -20,7 +40,7 @@ body {
 }
 button {
     padding: 10px 20px;
-    background: #6a5cff;
+    background: #2f4ea2;
     color: white;
     border: none;
     border-radius: 10px;
@@ -31,30 +51,46 @@ button {
 
 <body>
 
-<div class="card">
-    <h2>Квиток</h2>
+<div class="top">
+    <span id="route"></span>,
+    <span id="date"></span>
 
-    <p id="route"></p>
-    <p id="date"></p>
+    <div class="steps">
+        Потяг → Місця → Пасажири
+    </div>
+</div>
 
-    <p>Поїзд №001</p>
-    <p>Ціна: 300 грн</p>
+<div class="container">
+    <div class="card">
+        <h2>Доступні квитки</h2>
 
-    <button onclick="alert('Квиток куплено 😎')">
-        Купити
-    </button>
+        <p id="info"></p>
+
+        <p>Поїзд №001</p>
+        <p>Ціна: 300 грн</p>
+
+        <button onclick="alert('Квиток куплено 😎')">
+            Купити
+        </button>
+    </div>
 </div>
 
 <script>
-// отримуємо дані з URL
 let params = new URLSearchParams(window.location.search);
 
 let from = params.get("from");
 let to = params.get("to");
 let date = params.get("date");
 
+// формат дати як УЗ
+let formattedDate = new Date(date).toLocaleDateString('uk-UA', {
+    day: 'numeric',
+    month: 'long'
+});
+
 document.getElementById("route").innerText = `${from} → ${to}`;
-document.getElementById("date").innerText = `Дата: ${date}`;
+document.getElementById("date").innerText = formattedDate;
+document.getElementById("info").innerText = `Маршрут: ${from} → ${to}`;
 </script>
 
 </body>
